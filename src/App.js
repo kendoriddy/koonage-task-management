@@ -15,9 +15,12 @@ function App() {
   };
 
   const changeTaskStatus = (taskId) => {
-    console.log(taskId);
     const updatedTasks = tasks.map((task) =>
-      task.id === taskId ? { ...task, completed: true } : task
+      task.id === taskId && task.completed === false
+        ? { ...task, completed: true }
+        : task.id === taskId && task.completed === true
+        ? { ...task, completed: false }
+        : task
     );
     setTasks(updatedTasks);
   };
@@ -25,7 +28,7 @@ function App() {
   const openFormPopup = () => {
     setFormPopupOpen(true);
   };
-  console.log(tasks);
+
   const closeFormPopup = () => {
     setFormPopupOpen(false);
   };
@@ -33,11 +36,7 @@ function App() {
   return (
     <div className="App">
       <h1>Task Management App</h1>
-      <TaskList
-        tasks={dummyData}
-        openFormPopup={openFormPopup}
-        changeTaskStatus={changeTaskStatus}
-      />
+      <TaskList tasks={tasks} openFormPopup={openFormPopup} changeTaskStatus={changeTaskStatus} />
       {isFormPopupOpen && (
         <TaskFormPopup
           isOpen={isFormPopupOpen}

@@ -9,7 +9,9 @@ const TaskItem = ({ task, changeTaskStatus }) => {
       <p>{description}</p>
       <p>Status: {completed ? "Completed" : "Incomplete"}</p>
       <button>Edit</button>
-      <button onClick={changeTaskStatus}>Update</button>
+      <button onClick={changeTaskStatus}>
+        {completed ? "Mark as Incomplete" : "Mark as Completed"}
+      </button>
       <button>Delete</button>
     </li>
   );
