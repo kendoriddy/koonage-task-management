@@ -1,6 +1,6 @@
 import React from "react";
 
-const TaskItem = ({ task }) => {
+const TaskItem = ({ task, changeTaskStatus }) => {
   const { name, description, completed } = task;
 
   return (
@@ -9,7 +9,7 @@ const TaskItem = ({ task }) => {
       <p>{description}</p>
       <p>Status: {completed ? "Completed" : "Incomplete"}</p>
       <button>Edit</button>
-      <button>Update</button>
+      <button onClick={changeTaskStatus}>Update</button>
       <button>Delete</button>
     </li>
   );

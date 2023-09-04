@@ -6,6 +6,7 @@ import dummyData from "./dummyData";
 
 function App() {
   const [isFormPopupOpen, setFormPopupOpen] = useState(false);
+  const [tasks, setTasks] = useState(dummyData);
 
   // Function to add a new task.
   const handleAddTask = (newTask) => {
@@ -13,10 +14,18 @@ function App() {
     // You can use setTasks([...tasks, newTask]);
   };
 
+  const changeTaskStatus = (taskId) => {
+    console.log(taskId);
+    const updatedTasks = tasks.map((task) =>
+      task.id === taskId ? { ...task, completed: true } : task
+    );
+    setTasks(updatedTasks);
+  };
+
   const openFormPopup = () => {
     setFormPopupOpen(true);
   };
-  console.log(isFormPopupOpen);
+  console.log(tasks);
   const closeFormPopup = () => {
     setFormPopupOpen(false);
   };
@@ -24,7 +33,11 @@ function App() {
   return (
     <div className="App">
       <h1>Task Management App</h1>
-      <TaskList tasks={dummyData} openFormPopup={openFormPopup} />
+      <TaskList
+        tasks={dummyData}
+        openFormPopup={openFormPopup}
+        changeTaskStatus={changeTaskStatus}
+      />
       {isFormPopupOpen && (
         <TaskFormPopup
           isOpen={isFormPopupOpen}
