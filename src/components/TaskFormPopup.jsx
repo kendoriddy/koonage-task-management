@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import "../styles/TaskFormPopup.css";
 
 const TaskFormPopup = ({ isOpen, onClose, onAddTask }) => {
   const [task, setTask] = useState({ name: "", description: "" });
