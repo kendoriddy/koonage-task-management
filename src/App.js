@@ -41,13 +41,17 @@ function App() {
   return (
     <div className="App">
       <h1>Task Management App</h1>
-      <TaskList tasks={tasks} openFormPopup={openFormPopup} changeTaskStatus={changeTaskStatus} />
+      <TaskList
+        tasks={tasks}
+        openFormPopup={openFormPopup}
+        changeTaskStatus={changeTaskStatus}
+        onDeleteTask={handleDeleteTask}
+      />
       {isFormPopupOpen && (
         <TaskFormPopup
           isOpen={isFormPopupOpen}
           onClose={closeFormPopup}
           onAddTask={handleAddTask}
-          onDeleteTask={handleDeleteTask}
         />
       )}
     </div>
