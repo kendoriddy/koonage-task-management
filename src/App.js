@@ -5,6 +5,8 @@ import TaskList from "./components/TaskList";
 import dummyData from "./dummyData";
 import TaskLoading from "./components/TaskLoading";
 import TaskErrorMessage from "./components/TaskErrorMessage";
+import store from "./redux/store";
+import { Provider } from "react-redux";
 
 function App() {
   const [isFormPopupOpen, setFormPopupOpen] = useState(false);
@@ -49,26 +51,28 @@ function App() {
 
   console.log(tasks);
   return (
-    <div className="App">
-      <h1>Task Management App</h1>
-      {loading && <TaskLoading />}
-      {error && <TaskErrorMessage error={error} />}
-      <TaskList
-        tasks={tasks}
-        openFormPopup={openFormPopup}
-        changeTaskStatus={changeTaskStatus}
-        onDeleteTask={handleDeleteTask}
-        filter={filter}
-        handleFilterChange={handleFilterChange}
-      />
-      {isFormPopupOpen && (
-        <TaskFormPopup
-          isOpen={isFormPopupOpen}
-          onClose={closeFormPopup}
-          onAddTask={handleAddTask}
+    <Provider store={store}>
+      <div className="App">
+        <h1>Task Management App</h1>
+        {loading && <TaskLoading />}
+        {error && <TaskErrorMessage error={error} />}
+        <TaskList
+          tasks={tasks}
+          openFormPopup={openFormPopup}
+          changeTaskStatus={changeTaskStatus}
+          onDeleteTask={handleDeleteTask}
+          filter={filter}
+          handleFilterChange={handleFilterChange}
         />
-      )}
-    </div>
+        {isFormPopupOpen && (
+          <TaskFormPopup
+            isOpen={isFormPopupOpen}
+            onClose={closeFormPopup}
+            onAddTask={handleAddTask}
+          />
+        )}
+      </div>
+    </Provider>
   );
 }
 
