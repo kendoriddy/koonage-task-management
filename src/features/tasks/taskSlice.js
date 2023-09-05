@@ -1,34 +1,47 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+
+export const getAllTasks = createAsyncThunk("tasks/getAllTasks", async () => {
+  try {
+    const response = await fetch("https://drkapp-docs.onrender.com/v1/kennys", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const data = await response.json();
+    console.log(data);
+    return data;
+  } catch (error) {
+    throw new Error("Failed to fetch request types");
+  }
+});
 
 const initialState = {
   tasks: [],
   filter: "all",
+  error: null,
+  isLoading: false,
 };
 
 export const taskSlice = createSlice({
   name: "task",
   initialState,
-  reducer: {
-    addTask: (state, action) => {
-      state.tasks.push(action.payload);
-    },
-    updateTaskStatus: (state, action) => {
-      const { id, completed } = action.payload;
-      const taskToUpdate = state.tasks.find((task) => task.id === id);
-      if (taskToUpdate) {
-        taskToUpdate.completed = !completed; // Toggle the completed status
-      }
-    },
-    deleteTask: (state, action) => {
-      const taskIdToDelete = action.payload;
-      state.tasks = state.tasks.filter((task) => task.id !== taskIdToDelete);
-    },
-    setFilter: (state, action) => {
-      state.filter = action.payload;
-    },
+  reducer: {},
+  extraReducers: (builder) => {
+    builder
+      .addCase(getAllTasks.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getAllTasks.fulfilled, (state, action) => {
+        state.tasks = action.payload;
+      })
+      .addCase(getAllTasks.rejected, (state, action) => {
+        state.error = action.error.message;
+        state.isLoading = false;
+      });
   },
 });
 
-export const { addTask, updateTaskStatus, deleteTask, setFilter } = taskSlice.actions;
+export const allTasks = (state) => state.task.tasks;
 
 export default taskSlice.reducer;

@@ -9,7 +9,8 @@ const TaskFormPopup = ({ isOpen, onClose, onAddTask }) => {
     setTask({ ...task, [name]: value });
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = (e) => {
+    e.preventDefault();
     onAddTask(task);
     onClose();
     setTask({ name: "", description: "" });
