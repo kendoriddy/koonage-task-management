@@ -8,6 +8,9 @@ import TaskErrorMessage from "./components/TaskErrorMessage";
 import store from "./redux/store";
 import { Provider } from "react-redux";
 
+import { addTask, updateTaskStatus, deleteTask, setFilter } from "../tasksSlice";
+import { useSelector, useDispatch } from "react-redux";
+
 function App() {
   const [isFormPopupOpen, setFormPopupOpen] = useState(false);
   const [tasks, setTasks] = useState(dummyData);
@@ -15,10 +18,13 @@ function App() {
   const [loading, setLoading] = useState(false);
   const [filter, setFilter] = useState("all");
 
+  const dispatch = useDispatch();
+
   const handleAddTask = (newTask) => {
     const newTaskWithId = { ...newTask, id: Date.now() };
 
     setTasks([...tasks, newTaskWithId]);
+    dispatch(addTask(newTask));
   };
 
   const changeTaskStatus = (taskId) => {
@@ -30,6 +36,7 @@ function App() {
         : task
     );
     setTasks(updatedTasks);
+    dispatch(updateTaskStatus({ id: taskId, completed: !completed }));
   };
 
   const openFormPopup = () => {
@@ -43,10 +50,12 @@ function App() {
   const handleDeleteTask = (taskId) => {
     const updatedTasks = tasks.filter((task) => task.id !== taskId);
     setTasks(updatedTasks);
+    dispatch(deleteTask(taskId));
   };
 
   const handleFilterChange = (selectedFilter) => {
     setFilter(selectedFilter);
+    dispatch(setFilter(selectedFilter));
   };
 
   console.log(tasks);
