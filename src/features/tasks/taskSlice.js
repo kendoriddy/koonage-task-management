@@ -9,10 +9,31 @@ export const getAllTasks = createAsyncThunk("tasks/getAllTasks", async () => {
       },
     });
     const data = await response.json();
-    console.log(data);
     return data;
   } catch (error) {
     throw new Error("Failed to fetch request types");
+  }
+});
+
+export const createFinance = createAsyncThunk("finance/createFinance", async (task) => {
+  try {
+    const response = await fetch("https://drkapp-docs.onrender.com/v1/kennys", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(task),
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed to create finance");
+    }
+
+    const data = await response.json();
+    console.log(data);
+    return data;
+  } catch (error) {
+    throw new Error("Failed to create finance");
   }
 });
 
@@ -34,8 +55,20 @@ export const taskSlice = createSlice({
       })
       .addCase(getAllTasks.fulfilled, (state, action) => {
         state.tasks = action.payload;
+        state.isLoading = false;
       })
       .addCase(getAllTasks.rejected, (state, action) => {
+        state.error = action.error.message;
+        state.isLoading = false;
+      })
+      .addCase(createFinance.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(createFinance.fulfilled, (state, action) => {
+        state.tasks = action.payload;
+        state.isLoading = false;
+      })
+      .addCase(createFinance.rejected, (state, action) => {
         state.error = action.error.message;
         state.isLoading = false;
       });

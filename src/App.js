@@ -4,7 +4,7 @@ import TaskFormPopup from "./components/TaskFormPopup";
 import TaskList from "./components/TaskList";
 import TaskLoading from "./components/TaskLoading";
 import TaskErrorMessage from "./components/TaskErrorMessage";
-import { allTasks, getAllTasks } from "./features/tasks/taskSlice";
+import { allTasks, createFinance, getAllTasks } from "./features/tasks/taskSlice";
 import { useSelector, useDispatch } from "react-redux";
 
 function App() {
@@ -25,7 +25,7 @@ function App() {
   const handleAddTask = (newTask) => {
     const newTaskWithId = { ...newTask, id: Date.now() };
 
-    // dispatch(addTask(newTaskWithId));
+    dispatch(createFinance(newTaskWithId));
   };
 
   // const changeTaskStatus = (taskId) => {

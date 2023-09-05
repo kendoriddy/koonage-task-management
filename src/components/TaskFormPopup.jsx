@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "../styles/TaskFormPopup.css";
 
 const TaskFormPopup = ({ isOpen, onClose, onAddTask }) => {
-  const [task, setTask] = useState({ name: "", description: "", completed: false });
+  const [task, setTask] = useState({ name: "", description: "", status: false });
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
