@@ -8,10 +8,10 @@ function App() {
   const [isFormPopupOpen, setFormPopupOpen] = useState(false);
   const [tasks, setTasks] = useState(dummyData);
 
-  // Function to add a new task.
   const handleAddTask = (newTask) => {
-    // Implement logic to add the new task to the tasks state.
-    // You can use setTasks([...tasks, newTask]);
+    const newTaskWithId = { ...newTask, id: Date.now() };
+
+    setTasks([...tasks, newTaskWithId]);
   };
 
   const changeTaskStatus = (taskId) => {
@@ -37,7 +37,7 @@ function App() {
     const updatedTasks = tasks.filter((task) => task.id !== taskId);
     setTasks(updatedTasks);
   };
-
+  console.log(tasks);
   return (
     <div className="App">
       <h1>Task Management App</h1>
