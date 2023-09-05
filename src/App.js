@@ -33,6 +33,11 @@ function App() {
     setFormPopupOpen(false);
   };
 
+  const handleDeleteTask = (taskId) => {
+    const updatedTasks = tasks.filter((task) => task.id !== taskId);
+    setTasks(updatedTasks);
+  };
+
   return (
     <div className="App">
       <h1>Task Management App</h1>
@@ -42,6 +47,7 @@ function App() {
           isOpen={isFormPopupOpen}
           onClose={closeFormPopup}
           onAddTask={handleAddTask}
+          onDeleteTask={handleDeleteTask}
         />
       )}
     </div>
