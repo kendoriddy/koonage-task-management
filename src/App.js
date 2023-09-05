@@ -7,6 +7,9 @@ import dummyData from "./dummyData";
 function App() {
   const [isFormPopupOpen, setFormPopupOpen] = useState(false);
   const [tasks, setTasks] = useState(dummyData);
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [filter, setFilter] = useState("all"); //
 
   const handleAddTask = (newTask) => {
     const newTaskWithId = { ...newTask, id: Date.now() };
