@@ -5,10 +5,10 @@ const initialState = {
   filter: "all",
 };
 
-const tasksSlice = createSlice({
-  name: "tasks",
+export const taskSlice = createSlice({
+  name: "task",
   initialState,
-  reducers: {
+  reducer: {
     addTask: (state, action) => {
       state.tasks.push(action.payload);
     },
@@ -29,6 +29,6 @@ const tasksSlice = createSlice({
   },
 });
 
-export const { addTask, updateTaskStatus, deleteTask, setFilter } = tasksSlice.actions;
+export const { addTask, updateTaskStatus, deleteTask, setFilter } = taskSlice.actions;
 
-export default tasksSlice.reducer;
+export default taskSlice.reducer;

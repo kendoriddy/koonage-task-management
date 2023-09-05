@@ -1,6 +1,5 @@
 import React from "react";
 import TaskItem from "./TaskItem";
-import { addTask, updateTaskStatus, deleteTask, setFilter } from "../tasksSlice";
 import { useSelector, useDispatch } from "react-redux";
 
 const TaskList = ({

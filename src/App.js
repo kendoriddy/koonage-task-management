@@ -5,10 +5,9 @@ import TaskList from "./components/TaskList";
 import dummyData from "./dummyData";
 import TaskLoading from "./components/TaskLoading";
 import TaskErrorMessage from "./components/TaskErrorMessage";
-import store from "./redux/store";
-import { Provider } from "react-redux";
+import { store } from "./app/store";
 
-import { addTask, updateTaskStatus, deleteTask, setFilter } from "../tasksSlice";
+import { addTask, updateTaskStatus, deleteTask, setFilter } from "./features/tasks/taskSlice";
 import { useSelector, useDispatch } from "react-redux";
 
 function App() {
@@ -36,7 +35,13 @@ function App() {
         : task
     );
     setTasks(updatedTasks);
-    dispatch(updateTaskStatus({ id: taskId, completed: !completed }));
+
+    // Determine the current completed status for the task with taskId
+    const taskToToggle = tasks.find((task) => task.id === taskId);
+    if (taskToToggle) {
+      const completed = !taskToToggle.completed;
+      dispatch(updateTaskStatus({ id: taskId, completed: completed }));
+    }
   };
 
   const openFormPopup = () => {
@@ -60,28 +65,26 @@ function App() {
 
   console.log(tasks);
   return (
-    <Provider store={store}>
-      <div className="App">
-        <h1>Task Management App</h1>
-        {loading && <TaskLoading />}
-        {error && <TaskErrorMessage error={error} />}
-        <TaskList
-          tasks={tasks}
-          openFormPopup={openFormPopup}
-          changeTaskStatus={changeTaskStatus}
-          onDeleteTask={handleDeleteTask}
-          filter={filter}
-          handleFilterChange={handleFilterChange}
+    <div className="App">
+      <h1>Task Management App</h1>
+      {loading && <TaskLoading />}
+      {error && <TaskErrorMessage error={error} />}
+      <TaskList
+        tasks={tasks}
+        openFormPopup={openFormPopup}
+        changeTaskStatus={changeTaskStatus}
+        onDeleteTask={handleDeleteTask}
+        filter={filter}
+        handleFilterChange={handleFilterChange}
+      />
+      {isFormPopupOpen && (
+        <TaskFormPopup
+          isOpen={isFormPopupOpen}
+          onClose={closeFormPopup}
+          onAddTask={handleAddTask}
         />
-        {isFormPopupOpen && (
-          <TaskFormPopup
-            isOpen={isFormPopupOpen}
-            onClose={closeFormPopup}
-            onAddTask={handleAddTask}
-          />
-        )}
-      </div>
-    </Provider>
+      )}
+    </div>
   );
 }
 
