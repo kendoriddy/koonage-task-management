@@ -11,9 +11,7 @@ The Task Management App is a web application designed to help users manage their
 
 - Create new tasks with names and descriptions.
 - Mark tasks as completed or incomplete.
-- Edit task details.
 - Delete tasks.
-- Filter tasks by completion status (All, Completed, Incomplete).
 - User-friendly and responsive design.
 - Data persistence using Redux.
 
