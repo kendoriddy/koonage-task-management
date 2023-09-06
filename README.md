@@ -1,8 +1,9 @@
 
 # Task Management App - Koonage Take Home Assessment
-<img width="1440" alt="Screenshot 2023-09-06 at 11 02 02" src="https://github.com/kendoriddy/koonage-task-management/assets/86082070/5366c8fe-e8b5-4f81-937b-cdc021afbb44">
+<img width="1440" alt="Screenshot 2023-09-06 at 11 32 02" src="https://github.com/kendoriddy/koonage-task-management/assets/86082070/2b9aba7a-fec4-43ca-b0f2-3810b2e517c8">
 
 ## Introduction
+
 
 The Task Management App is a web application designed to help users manage their tasks effectively. With features for creating, updating, and deleting tasks, as well as filtering tasks based on completion status, this app is the perfect solution for staying organized.
 
