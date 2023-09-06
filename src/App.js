@@ -19,6 +19,7 @@ function App() {
   const [loading, setLoading] = useState(false);
 
   const dispatch = useDispatch();
+  const dataLoading = useSelector((state) => state.task.isLoading);
 
   useEffect(() => {
     dispatch(getAllTasks());
@@ -55,7 +56,7 @@ function App() {
   return (
     <div className="App">
       <h1>Task Management App</h1>
-      {loading && <TaskLoading />}
+      {dataLoading && <TaskLoading />}
       {error && <TaskErrorMessage error={error} />}
       <TaskList
         tasks={userTasks}

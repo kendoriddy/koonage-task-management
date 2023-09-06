@@ -105,7 +105,7 @@ export const taskSlice = createSlice({
         state.isLoading = true;
       })
       .addCase(createTask.fulfilled, (state, action) => {
-        state.tasks = action.payload;
+        state.tasks.push(action.payload);
         state.isLoading = false;
       })
       .addCase(createTask.rejected, (state, action) => {
