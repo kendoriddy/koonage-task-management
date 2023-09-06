@@ -4,14 +4,19 @@ import TaskFormPopup from "./components/TaskFormPopup";
 import TaskList from "./components/TaskList";
 import TaskLoading from "./components/TaskLoading";
 import TaskErrorMessage from "./components/TaskErrorMessage";
-import { allTasks, createTask, getAllTasks, updateTaskById } from "./features/tasks/taskSlice";
+import {
+  allTasks,
+  createTask,
+  deleteTaskById,
+  getAllTasks,
+  updateTaskById,
+} from "./features/tasks/taskSlice";
 import { useSelector, useDispatch } from "react-redux";
 
 function App() {
   const [isFormPopupOpen, setFormPopupOpen] = useState(false);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [filter, setFilter] = useState("all");
 
   const dispatch = useDispatch();
 
@@ -44,13 +49,7 @@ function App() {
   };
 
   const handleDeleteTask = (taskId) => {
-    const updatedTasks = allTasks.filter((task) => task.id !== taskId);
-    // dispatch(deleteTask(taskId));
-  };
-
-  const handleFilterChange = (selectedFilter) => {
-    setFilter(selectedFilter);
-    // dispatch(setFilter(selectedFilter));
+    dispatch(deleteTaskById(taskId));
   };
 
   return (
@@ -63,8 +62,6 @@ function App() {
         openFormPopup={openFormPopup}
         changeTaskStatus={changeTaskStatus}
         onDeleteTask={handleDeleteTask}
-        filter={filter}
-        handleFilterChange={handleFilterChange}
       />
       {isFormPopupOpen && (
         <TaskFormPopup

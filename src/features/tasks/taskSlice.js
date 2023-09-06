@@ -60,6 +60,22 @@ export const updateTaskById = createAsyncThunk(
   }
 );
 
+export const deleteTaskById = createAsyncThunk("task/deleteTaskById", async (taskId) => {
+  try {
+    const response = await fetch(`https://drkapp-docs.onrender.com/v1/kennys/${taskId}`, {
+      method: "DELETE",
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed to delete task");
+    }
+
+    return taskId; // Return the deleted taskId
+  } catch (error) {
+    throw new Error("Failed to delete task");
+  }
+});
+
 const initialState = {
   tasks: [],
   updatedTask: {},
@@ -108,6 +124,20 @@ export const taskSlice = createSlice({
         state.isLoading = false;
       })
       .addCase(updateTaskById.rejected, (state, action) => {
+        state.error = action.error.message;
+        state.isLoading = false;
+      })
+      .addCase(deleteTaskById.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(deleteTaskById.fulfilled, (state, action) => {
+        const deletedTaskId = action.payload;
+
+        // Filter out the deleted task from the state's tasks array
+        state.tasks = state.tasks.filter((task) => task.id !== deletedTaskId);
+        state.isLoading = false;
+      })
+      .addCase(deleteTaskById.rejected, (state, action) => {
         state.error = action.error.message;
         state.isLoading = false;
       });
