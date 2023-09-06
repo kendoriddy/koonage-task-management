@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import "../styles/TaskFormPopup.css";
 
 const TaskFormPopup = ({ isOpen, onClose, onAddTask }) => {
   const [task, setTask] = useState({ name: "", description: "", status: "incomplete" });
@@ -17,24 +16,46 @@ const TaskFormPopup = ({ isOpen, onClose, onAddTask }) => {
   };
 
   return (
-    <div className={`task-popup ${isOpen ? "open" : ""}`}>
-      <div className="task-popup-content">
-        <h2>Add New Task</h2>
+    <div
+      className={`fixed inset-0 flex items-center justify-center ${isOpen ? "block" : "hidden"}`}
+    >
+      <div className="absolute inset-0 bg-black opacity-50"></div>
+      <div className="bg-white w-96 p-6 rounded-lg shadow-lg z-10">
+        <h2 className="text-xl font-semibold mb-4">Add New Task</h2>
         <form onSubmit={handleSubmit}>
-          <label>
-            Task Name:
-            <input type="text" name="name" value={task.name} onChange={handleInputChange} />
-          </label>
-          <label>
-            Description:
+          <div className="mb-4">
+            <label className="block text-gray-700">Task Name:</label>
+            <input
+              type="text"
+              name="name"
+              value={task.name}
+              onChange={handleInputChange}
+              className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:border-blue-500"
+            />
+          </div>
+          <div className="mb-4">
+            <label className="block text-gray-700">Description:</label>
             <textarea
               name="description"
               value={task.description}
               onChange={handleInputChange}
+              className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:border-blue-500"
             ></textarea>
-          </label>
-          <button type="submit">Add Task</button>
-          <button onClick={onClose}>Cancel</button>
+          </div>
+          <div className="flex justify-end">
+            <button
+              type="submit"
+              className="bg-blue-500 text-white hover:bg-blue-600 px-4 py-2 rounded mr-2"
+            >
+              Add Task
+            </button>
+            <button
+              onClick={onClose}
+              className="bg-gray-300 text-gray-700 hover:bg-gray-400 px-4 py-2 rounded"
+            >
+              Cancel
+            </button>
+          </div>
         </form>
       </div>
     </div>

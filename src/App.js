@@ -54,23 +54,28 @@ function App() {
   };
 
   return (
-    <div className="App">
-      <h1>Task Management App</h1>
-      {dataLoading && <TaskLoading />}
-      {error && <TaskErrorMessage error={error} />}
-      <TaskList
-        tasks={userTasks}
-        openFormPopup={openFormPopup}
-        changeTaskStatus={changeTaskStatus}
-        onDeleteTask={handleDeleteTask}
-      />
-      {isFormPopupOpen && (
-        <TaskFormPopup
-          isOpen={isFormPopupOpen}
-          onClose={closeFormPopup}
-          onAddTask={handleAddTask}
+    <div className="bg-gray-100 min-h-screen">
+      <header className="bg-blue-500 text-white py-4 text-center">
+        <h1 className="text-2xl font-semibold">Task Management App</h1>
+      </header>
+      <div className="container mx-auto py-8 px-4">
+        {dataLoading && <TaskLoading />}
+        {error && <TaskErrorMessage error={error} />}
+        <div className="flex justify-end mb-4"></div>
+        <TaskList
+          tasks={userTasks}
+          changeTaskStatus={changeTaskStatus}
+          onDeleteTask={handleDeleteTask}
+          openFormPopup={openFormPopup}
         />
-      )}
+        {isFormPopupOpen && (
+          <TaskFormPopup
+            isOpen={isFormPopupOpen}
+            onClose={closeFormPopup}
+            onAddTask={handleAddTask}
+          />
+        )}
+      </div>
     </div>
   );
 }
