@@ -21,7 +21,6 @@ const TaskItem = ({ task, changeTaskStatus, onDeleteTask }) => {
         Status: {status === "completed" ? "Completed" : "Incomplete"}
       </p>
       <div className="flex space-x-2">
-        <button className="bg-blue-500 text-white hover:bg-blue-600 px-3 py-1 rounded">Edit</button>
         <button
           onClick={changeTaskStatus}
           className={`bg-${status === "completed" ? "red" : "green"}-500 text-white hover:bg-${

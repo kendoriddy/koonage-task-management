@@ -1,6 +1,5 @@
 import React from "react";
 import TaskItem from "./TaskItem";
-import { useSelector, useDispatch } from "react-redux";
 
 const TaskList = ({ tasks, openFormPopup, changeTaskStatus, onDeleteTask }) => {
   return (

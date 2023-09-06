@@ -16,7 +16,6 @@ import { useSelector, useDispatch } from "react-redux";
 function App() {
   const [isFormPopupOpen, setFormPopupOpen] = useState(false);
   const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(false);
 
   const dispatch = useDispatch();
   const dataLoading = useSelector((state) => state.task.isLoading);
@@ -26,7 +25,6 @@ function App() {
   }, []);
 
   const userTasks = useSelector(allTasks);
-  console.log(userTasks);
 
   const handleAddTask = (newTask) => {
     dispatch(createTask(newTask));
