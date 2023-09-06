@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import TaskDeletePopup from "./TaskDeletePopup";
 
 const TaskItem = ({ task, changeTaskStatus, onDeleteTask }) => {
-  const { name, description, completed } = task;
+  const { name, description, status } = task;
   const [isDeletePopupOpen, setDeletePopupOpen] = useState(false);
 
   const openDeletePopup = () => {
@@ -17,10 +17,10 @@ const TaskItem = ({ task, changeTaskStatus, onDeleteTask }) => {
     <li>
       <h3>{name}</h3>
       <p>{description}</p>
-      <p>Status: {completed ? "Completed" : "Incomplete"}</p>
+      <p>Status: {status === "completed" ? "completed" : "incomplete"}</p>
       <button>Edit</button>
       <button onClick={changeTaskStatus}>
-        {completed ? "Mark as Incomplete" : "Mark as Completed"}
+        {status ? "Mark as Incomplete" : "Mark as Completed"}
       </button>
       <button onClick={openDeletePopup}>Delete</button>
       {isDeletePopupOpen && (

@@ -11,11 +11,11 @@ export const getAllTasks = createAsyncThunk("tasks/getAllTasks", async () => {
     const data = await response.json();
     return data;
   } catch (error) {
-    throw new Error("Failed to fetch request types");
+    throw new Error("Failed to fetch tasks");
   }
 });
 
-export const createFinance = createAsyncThunk("finance/createFinance", async (task) => {
+export const createTask = createAsyncThunk("tasks/createTask", async (task) => {
   try {
     const response = await fetch("https://drkapp-docs.onrender.com/v1/kennys", {
       method: "POST",
@@ -26,19 +26,43 @@ export const createFinance = createAsyncThunk("finance/createFinance", async (ta
     });
 
     if (!response.ok) {
-      throw new Error("Failed to create finance");
+      throw new Error("Failed to create task");
     }
 
     const data = await response.json();
-    console.log(data);
     return data;
   } catch (error) {
-    throw new Error("Failed to create finance");
+    throw new Error("Failed to create task");
   }
 });
 
+export const updateTaskById = createAsyncThunk(
+  "task/updateTaskById",
+  async ({ taskId, updatedData }) => {
+    try {
+      const response = await fetch(`https://drkapp-docs.onrender.com/v1/kennys/${taskId}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(updatedData),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to update task");
+      }
+
+      const updatedTask = await response.json();
+      return { taskId, updatedTask };
+    } catch (error) {
+      throw new Error("Failed to update task");
+    }
+  }
+);
+
 const initialState = {
   tasks: [],
+  updatedTask: {},
   filter: "all",
   error: null,
   isLoading: false,
@@ -61,14 +85,29 @@ export const taskSlice = createSlice({
         state.error = action.error.message;
         state.isLoading = false;
       })
-      .addCase(createFinance.pending, (state) => {
+      .addCase(createTask.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(createFinance.fulfilled, (state, action) => {
+      .addCase(createTask.fulfilled, (state, action) => {
         state.tasks = action.payload;
         state.isLoading = false;
       })
-      .addCase(createFinance.rejected, (state, action) => {
+      .addCase(createTask.rejected, (state, action) => {
+        state.error = action.error.message;
+        state.isLoading = false;
+      })
+      .addCase(updateTaskById.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(updateTaskById.fulfilled, (state, action) => {
+        const { taskId, updatedTask } = action.payload;
+        const taskIndex = state.tasks.findIndex((task) => task.id === taskId);
+        if (taskIndex !== -1) {
+          state.tasks[taskIndex] = updatedTask;
+        }
+        state.isLoading = false;
+      })
+      .addCase(updateTaskById.rejected, (state, action) => {
         state.error = action.error.message;
         state.isLoading = false;
       });

@@ -35,7 +35,7 @@ const TaskList = ({
           <TaskItem
             key={task.id}
             task={task}
-            changeTaskStatus={() => changeTaskStatus(task.id)}
+            changeTaskStatus={() => changeTaskStatus(task.id, task)}
             onDeleteTask={onDeleteTask}
           />
         ))}

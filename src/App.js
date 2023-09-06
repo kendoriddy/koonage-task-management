@@ -4,7 +4,7 @@ import TaskFormPopup from "./components/TaskFormPopup";
 import TaskList from "./components/TaskList";
 import TaskLoading from "./components/TaskLoading";
 import TaskErrorMessage from "./components/TaskErrorMessage";
-import { allTasks, createFinance, getAllTasks } from "./features/tasks/taskSlice";
+import { allTasks, createTask, getAllTasks, updateTaskById } from "./features/tasks/taskSlice";
 import { useSelector, useDispatch } from "react-redux";
 
 function App() {
@@ -23,27 +23,17 @@ function App() {
   console.log(userTasks);
 
   const handleAddTask = (newTask) => {
-    const newTaskWithId = { ...newTask, id: Date.now() };
-
-    dispatch(createFinance(newTaskWithId));
+    dispatch(createTask(newTask));
   };
 
-  // const changeTaskStatus = (taskId) => {
-  //   const updatedTasks = allTasks.map((task) =>
-  //     task.id === taskId && task.completed === false
-  //       ? { ...task, completed: true }
-  //       : task.id === taskId && task.completed === true
-  //       ? { ...task, completed: false }
-  //       : task
-  //   );
+  const changeTaskStatus = (taskId, task) => {
+    const updatedData = {
+      ...task,
+      status: task.status === "completed" ? "incompleted" : "completed",
+    };
 
-  //   // Determine the current completed status for the task with taskId
-  //   const taskToToggle = allTasks.find((task) => task.id === taskId);
-  //   if (taskToToggle) {
-  //     const completed = !taskToToggle.completed;
-  //     dispatch(updateTaskStatus({ id: taskId, completed: !completed }));
-  //   }
-  // };
+    dispatch(updateTaskById({ taskId, updatedData }));
+  };
 
   const openFormPopup = () => {
     setFormPopupOpen(true);
@@ -71,8 +61,7 @@ function App() {
       <TaskList
         tasks={userTasks}
         openFormPopup={openFormPopup}
-        changeTaskStatus=""
-        // changeTaskStatus={changeTaskStatus}
+        changeTaskStatus={changeTaskStatus}
         onDeleteTask={handleDeleteTask}
         filter={filter}
         handleFilterChange={handleFilterChange}
